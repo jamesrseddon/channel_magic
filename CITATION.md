@@ -1,8 +1,10 @@
-Channel Magic
-=============
+Channel Magic v1.0
+==================
 
 To cite this software, please cite the GitHub URL: https://github.com/jamesrseddon/channel_magic,
 and the accompanying journal paper, which can be found at: https://arxiv.org/abs/1901.03322
+
+The software is provided under the MIT license, see LICENSE.md for details.
 
 --------------------------------------
 
