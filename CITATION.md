@@ -1,6 +1,8 @@
 Channel Magic v1.0
 ==================
 
+Copyright (c) 2019 James R. Seddon.
+
 To cite this software, please cite the GitHub URL: https://github.com/jamesrseddon/channel_magic,
 and the accompanying journal paper, which can be found at: https://arxiv.org/abs/1901.03322
 
