@@ -43,10 +43,26 @@ function [ kraus_ops ] = conditionalChannel(measure_channel,varargin)
 %       1. Measure in Z-basis
 %       2a. If outcome is +1, apply unitary U.
 %       2b. If outcome is -1, apply CPTP map T.
+%
+%   By default, channels are assumed to be CPTP maps where input and output
+%   spaces have same dimension. To relax this constraint for the
+%   conditioned operations, pass 'G' as the final optional argument.
+
 
 % Input validation
 
+final_arg = varargin{nargin-1};
+
+generalised_maps = false;
 num_channel_args = nargin-1;
+
+if ischar(final_arg)
+    if strcmp('G',final_arg)
+        generalised_maps = true;
+        num_channel_args = nargin-2;
+    end
+end
+
 
 m_op_type = checkOpType(measure_channel);
 
@@ -68,32 +84,48 @@ if num_outcomes ~= num_channel_args
     error(errorStruct);
 end
 
+op_rows = zeros(num_channel_args);
+
 for kk = 1:num_channel_args
     this_operation = varargin{kk};
-    this_op_type = checkOpType(this_operation);
-    if strcmp(this_op_type,'NK')||strcmp(this_op_type,'NU')
-        errorStruct.message = [ 'Inputs need to be unitary matrices, or'...
-           ' complete sets of Kraus operators. There is an issue with '...
-           ' the ' num2str(kk) '-th input after the measurement channel.'];
-        errorStruct.identifier = ['quasi:conditionalChannel:'...
+    if ~generalised_maps
+        this_op_type = checkOpType(this_operation);
+        if strcmp(this_op_type,'NK')||strcmp(this_op_type,'NU')
+            errorStruct.message = [ 'Inputs need to be unitary matrices, or'...
+             ' complete sets of Kraus operators. There is an issue with '...
+            ' the ' num2str(kk) '-th input after the measurement channel.'];
+            errorStruct.identifier = ['quasi:conditionalChannel:'...
             'invalidChannel'];
-        error(errorStruct);
+            error(errorStruct);
+        end
     end
     
-    [op_rows,op_columns,~] = size(this_operation);
+    [op_rows(kk),op_columns,~] = size(this_operation);
     
-    if rows~=op_rows||columns~=op_columns
+    if rows~=op_columns
         errorStruct.message = [ 'Dimensions of ' num2str(kk) '-th input'...
             ' do not match dimensions of measurement channel.'];
         errorStruct.identifier = ['quasi:conditionalChannel:'...
         'dimensionMismatch'];
         error(errorStruct);
     end
+    
+    if op_rows(kk)~=op_rows(1)
+        errorStruct.message = ['All conditional operations should have '...
+            'output space of the same dimension. The output space for '...
+            'operation ' num2str(kk) ' has dimension '...
+            num2str(op_rows(kk)) ', whereas dimension for the first '...
+            'operation is ' numstr(op_rows(1)) '.'];
+        errorStruct.identifier = ['quasi:conditionalChannel:'...
+        'outputSpaceMismatch'];
+        error(errorStruct);
+    end
+    
 end
 
 % begin constructing new kraus operators.
 
-kraus_ops = zeros(rows,columns,0)
+kraus_ops = zeros(op_rows(1),columns,0);
 
 for outcome = 1:num_outcomes
     % get the measurement Kraus op for this outcome.
@@ -105,7 +137,7 @@ for outcome = 1:num_outcomes
     % check how many kraus operators in this channel.
     num_operators = size(conditioned_map,3); 
     for jj = 1:num_operators
-        next_index = size(kraus_ops,3) + 1
+        next_index = size(kraus_ops,3) + 1;
         
         kraus_ops(:,:,next_index) = conditioned_map(:,:,jj)*measure_kraus;
     end

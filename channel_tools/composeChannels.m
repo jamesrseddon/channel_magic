@@ -20,31 +20,46 @@
 %  Copyright © 2019 James R. Seddon
 %  This file is part of project: Channel Magic
 %
-function [ output_args ] = composeChannels(E_1,E_2)
+function [ output_args ] = composeChannels(E_1,E_2,varargin)
 %COMPOSECHANNELS Take two channels E_1 and E_2 and compose them: 
 % E = E_2 \circ E_1. Output will be a set of Kraus operators.
+% By default, the function assumes that the channels should have same input
+% and output dimension and set of Kraus operators should be complete, and 
+% will validate inputs. Set varargin to 'G' to suppress
+% validation, allowing more general maps (e.g. isometries or
+% trace-non-increasing maps).
 
-op_type_1 = checkOpType(E_1);
-op_type_2 = checkOpType(E_2);
+validate_inputs = true;
 
-if strcmp(op_type_1,'NK')|strcmp(op_type_1,'NU')
-    errorStruct.message = [ 'First argument should be a complete Kraus'...
-        ' representation for some channel, or a unitary matrix.'];
-    errorStruct.identifier = ['quasi:composeChannels:'...
-        'invalidChannel'];
-    error(errorStruct);
+if nargin > 2
+    if strcmp(varargin{1},'G');
+         validate_inputs = false;
+    end
 end
 
-if strcmp(op_type_2,'NK')|strcmp(op_type_2,'NU')
-    errorStruct.message = [ 'Second argument should be a complete Kraus'...
-        ' representation for some channel, or a unitary matrix.'];
-    errorStruct.identifier = ['quasi:composeChannels:'...
-        'invalidChannel'];
-    error(errorStruct);
+if validate_inputs
+    op_type_1 = checkOpType(E_1);
+    op_type_2 = checkOpType(E_2);
+
+    if strcmp(op_type_1,'NK')|strcmp(op_type_1,'NU')
+        errorStruct.message = [ 'First argument should be a complete Kraus'...
+            ' representation for some channel, or a unitary matrix.'];
+        errorStruct.identifier = ['quasi:composeChannels:'...
+            'invalidChannel'];
+        error(errorStruct);
+    end
+
+    if strcmp(op_type_2,'NK')|strcmp(op_type_2,'NU')
+        errorStruct.message = [ 'Second argument should be a complete Kraus'...
+            ' representation for some channel, or a unitary matrix.'];
+        errorStruct.identifier = ['quasi:composeChannels:'...
+            'invalidChannel'];
+        error(errorStruct);
+    end
 end
 
 [dim_1,~,num_kraus_1] = size(E_1);
-[dim_2,~,num_kraus_2] = size(E_2);
+[~,dim_2,num_kraus_2] = size(E_2);
 
 if dim_1 ~= dim_2
     errorStruct.message = [ 'Dimensions of channels do not agree.'];
