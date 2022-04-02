@@ -48,7 +48,7 @@ as well as the thesis
 by James R. Seddon,
 University College London (2021).
 This thesis will shortly be available via UCL Open Access, and this readme
-will updated when a link is available.
+will be updated when a link is available.
 
 The code also allows computation of several of the measures of magic 
 defined in
