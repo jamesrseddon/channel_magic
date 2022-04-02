@@ -22,6 +22,22 @@ The software is provided under the MIT license, see LICENSE.md for details.
 
 --------------------------------------
 
-This repository includes, with permission, data files available from http://markhoward.info/code-1 for calculating the robustness of magic for states, Copyright (c) 2017 Mark Howard.  These files were originally developed to accompany the journal paper:
-"Application of a Resource Theory for Magic States to Fault-Tolerant Quantum Computing", by Mark Howard and Earl Campbell, Physical Review Letters, 118, 090501 – Published 3 March 2017, doi: 10.1103/PhysRevLett.118.090501.
-The files in question are all those in the 'robustness_files' subdirectory, with the exception of 'Amat1.mat' and 'Amat1_Clifford_Pauli_reset.mat'.
+This repository includes, with permission, data files produced by Mark 
+Howard for calculating the robustness of magic for states, 
+Copyright (c) 2017 Mark Howard.  These files were originally 
+developed to accompany the following paper and are available at
+https://markhoward.info/code-1
+or
+https://earltcampbell.com/graphics/open-source/
+"Application of a Resource Theory for Magic States to Fault-Tolerant 
+Quantum Computing", by Mark Howard and Earl Campbell, Physical Review 
+Letters, 118, 090501, Published 3 March 2017, 
+doi: 10.1103/PhysRevLett.118.090501.
+The files in question are:
+robustness_files/3QubitCalculations.txt
+robustness_files/4QubitCalculations.txt
+robustness_files/Amat2.mat
+robustness_files/Amat3.mat
+robustness_files/Amat4.mat
+robustness_files/Amat5.mat
+robustness_files/readme.txt

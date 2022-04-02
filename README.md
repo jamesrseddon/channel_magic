@@ -35,6 +35,7 @@ Email: jseddonquantum@gmail.com
 
 
 This code accompanies the article
+[Seddon2019]
 "Quantifying magic for multi-qubit operations",
 by James R. Seddon and Earl T. Campbell,
 Proc. R. Soc. A. 475:20190251 (2019)
@@ -42,15 +43,21 @@ https://doi.org/10.1098/rspa.2019.0251
 https://arxiv.org/abs/1901.03322
 
 as well as the thesis
+[Seddon2021]
 "Advancing classical simulators by measuring the magic of quantum computation", 
 by James R. Seddon,
 University College London (2021).
-This thesis will shortly be available via UCL Open Access.
+This thesis will shortly be available via UCL Open Access, and this readme
+will updated when a link is available.
 
-The code also allows computation of several of the measures of magic defined in
+The code also allows computation of several of the measures of magic 
+defined in
+[Seddon2021B]
 "Quantify quantum speedups: improved classical simulation from tighter magic monotones",
 by James R. Seddon, Bartosz Regula, Hakop Pashayan, Yingkai Ouyang and Earl T. Campbell,
 PRX Quantum 2, 010345 (2021)
+https://doi.org/10.1103/PRXQuantum.2.010345
+https://arxiv.org/abs/2002.06181
 
 The MATLAB tools released in v1.0 of this repository were primarily aimed
 at calculating the channel robustness and magic-increasing capacity, as 
@@ -60,21 +67,20 @@ The repository also contains several data files Copyright (C) 2017 Mark Howard, 
 
 
 v2.0 includes code to compute or bound further measures of magic for
-channels defined in the thesis, Seddon (2021), allowing 
+channels defined in the thesis cited above [Seddon2021], as well as measures
+of magic for states discussed in [Seddon2021B].
 
-It also allows computation of several of the measures of magic for states defined in
-"Quantify quantum speedups: improved classical simulation from tighter magic monotones",
-by James R. Seddon, Bartosz Regula, Hakop Pashayan, Yingkai Ouyang and Earl T. Campbell,
-PRX Quantum 2, 010345 (2021)
-https://doi.org/10.1103/PRXQuantum.2.010345
-https://arxiv.org/abs/2002.06181
 
 ------------------------------
 # Prerequisites and Installation
 
-Code is written in MATLAB, and requires the free convex optimisation package CVX.
+Code is written in MATLAB, and requires the free convex optimisation
+package CVX.
 Downloads and documentation for CVX can be found at cvxr.com.
 
+The repository also contains two Mathematica notebooks. These relate to
+the plotting of specific figures in the thesis [Seddon2021], and
+Mathematica is not needed for using main functionality.
 
 To install, simply clone this repository and add to your MATLAB path.
 
@@ -97,7 +103,8 @@ be in the user's MATLAB path:
 ------------------------------
 # Working examples
 
-The root directory contains several stand-alone scripts that illustrate the basic functionality of the code:
+The root directory contains several stand-alone scripts that illustrate 
+the basic functionality of the code:
 
 channel_robustness.m
 --------------------
@@ -109,20 +116,46 @@ Calculates magic capacity for several examples.
 
 diagonal_channels.m
 -------------------
-Calculates both magic measures for some example diagonal operations on up to 5 qubits.
+Calculates both magic measures for some example diagonal operations on up 
+to 5 qubits.
 
 load_robustness_files.m
 -----------------------
-A number of the functions in this repository involve linear systems of the form Ax = b. This script loads the data files containing the necessary A matrices into the workspace. It also loads cell arrays containing affine space representations of stabiliser states, which are needed for calculating capacity in the case of diagonal channels.
+A number of the functions in this repository involve linear systems of the 
+form Ax = b. This script loads the data files containing the necessary 
+A matrices into the workspace. It also loads cell arrays containing affine 
+space representations of stabiliser states, which are needed for 
+calculating capacity in the case of diagonal channels.
 
 -------------------------------
 # Reproducing numerical results
 
-The 'scripts' directory contains scripts for reproducing the numerical results presented in arXiv:1901.03322.
+[Seddon2019]
 
-The results for single-qubit rotations subject to amplitude damping can be reproduced using '/scripts/noisy_channel_sweep.m'.
+The 'scripts' directory contains scripts for reproducing the numerical 
+results presented in arXiv:1901.03322.
 
-Results for multi-control phase gates and random diagonal gates can be reproduced using '/scripts/multicontrol_phase_gates.m' and '/scripts/random_phase_searches.m' respectively.
+The results for single-qubit rotations subject to amplitude damping can be 
+reproduced using '/scripts/noisy_channel_sweep.m'.
 
-Results for tensor product Z-rotations can be calculated using '/scripts/Z_rotation_sweep.m'.
+Results for multi-control phase gates and random diagonal gates can be 
+reproduced using '/scripts/multicontrol_phase_gates.m' and 
+'/scripts/random_phase_searches.m' respectively.
+
+Results for tensor product Z-rotations can be calculated using 
+'/scripts/Z_rotation_sweep.m'.
+
+[Seddon2021]
+
+The subdirectory 'scripts/thesis_6_2' includes MATLAB scripts for 
+generating the data used to plot figures 6.8 to 6.10 from Section 6.2, 
+Chapter 6 of the PhD thesis cited above [Seddon2021].
+
+the directory 'mathematica_notebooks' contains notebooks that can be used
+to reproduced figures 6.6, 6.7 and 6.10 of the same chapter.
+
+
+
+
+
 
