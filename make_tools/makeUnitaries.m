@@ -35,3 +35,9 @@ THT = Trotate*Hadamard*Trotate;
 
 THTexplicit = (1/sqrt(2))*[1 (1+1i)/sqrt(2);
                    (1+1i)/sqrt(2) -1i];
+               
+H = Hadamard;
+
+S = [1 0; 0 1i];
+
+F = S*H*S*H;

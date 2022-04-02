@@ -20,14 +20,16 @@
 %  Copyright © 2019 James R. Seddon
 %  This file is part of project: Channel Magic
 %
+% ROBUSTNESSSWITCH Calculate some robustness-like quantity based on R_ID
+%  passed in.
 function [ value,precision,status, dist ] = robustnessSwitch(R_ID,channel,...
                         A_matrix,solver_precision,solver_selection,...
                         varargin)
-% ROBUSTNESSSWITCH Calculate some robustness-like quantity based on R_ID
-%  passed in.
+
 
 allowed_IDs = {'R_CHOI', 'R_CHOI_DIAG', 'CHANNEL_ROB',...
-    'CHANNEL_ROB_DIAG', 'CAPACITY', 'CAPACITY_DIAG'};
+    'CHANNEL_ROB_DIAG', 'CAPACITY', 'CAPACITY_DIAG','R_CHOI_COMPLEX',...
+    'GEN_ROB_CHOI'};
 
 if ~any(strcmp(allowed_IDs,R_ID))
     error_struct.message = [R_ID ' is not a known identifier for a '...
@@ -48,6 +50,11 @@ switch R_ID
         [optval,status,dist,dual_var,optbnd] =...
                             findChoiRobustness(channel,A_matrix,...
                                       solver_precision,solver_selection);
+        calculated = true;
+    case 'R_CHOI_COMPLEX'
+        [optval,status,dist,dual_var,optbnd] =...
+                            findChoiRobustness(channel,A_matrix,...
+                             solver_precision,solver_selection,'complex');
         calculated = true;
     case 'R_CHOI_DIAG'
         [optval,status,dist,dual_var,optbnd] =...
@@ -84,7 +91,11 @@ switch R_ID
         status = [cap_results{(cap_index + 1),5} '(optimal channel)'];
         dist = cap_results{(cap_index + 1),6};
     case 'CAPACITY_DIAG'
-        display(['Capacity for diagonal states not yet coded.']);
+        disp(['Capacity for diagonal states not yet coded.']);
+    case 'GEN_ROB_CHOI'
+        choi_state = makeChoiState(channel);
+        [optval,dist,status] = RobMagG(choi_state,A_matrix);
+        optbnd = optval;
 end
 
 value = mean([optval optbnd]);

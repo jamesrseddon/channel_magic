@@ -30,3 +30,14 @@ minusket = (1/sqrt(2))*[1 ; -1];
 
 plusYket = (1/sqrt(2))*[1 ; 1i];
 minusYket = (1/sqrt(2))*[1 ; -1i];
+
+
+zerorho = zeroket*zeroket';
+onerho = oneket*oneket';
+
+plusrho = plusket*plusket';
+minusrho = minusket*minusket';
+
+plusYrho = plusYket*plusYket';
+minusYrho = minusYket*minusYket';
+

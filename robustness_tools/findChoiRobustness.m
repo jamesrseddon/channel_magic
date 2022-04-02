@@ -22,9 +22,13 @@
 %
 function [l1norm,status,distribution,dual_var,optbnd] =...
                             findChoiRobustness(operation,A_matrix,varargin)
-%%% Use CVX to calculate optimal Choi state decomposition for a unitary,
+%%% Use CVX to calculate optimal Choi state decomposition for a channel,
 %%% with respect to the set of operations defined by the input A matrix.
 %%% If an argument 'high' is passed in, CVX will aim for higher precision.
+%%% Can also optionally pass in:
+%%%     'SDPT' as 4th argument to use SDPT3 solver.
+%%%     'complex' or 'C' as 5th argument to have CVX use complex variables
+%%%     for the optimisation.
 
 
 
@@ -56,6 +60,7 @@ choi_state = makeChoiState(operation);
 
 solver_precision = 'default';
 solver_selection = 'default';
+complex_flag = 'default';
 
 if nargin > 2
     solver_precision = varargin{1};
@@ -65,9 +70,13 @@ if nargin > 3
     solver_selection = varargin{2};
 end
 
+if nargin > 4 
+    complex_flag = varargin{3};
+end
+
 %%% run CVX linear program
 [l1norm,status,distribution,dual_var,optbnd] = findRobustness(choi_state,...
-    A_matrix,solver_precision,solver_selection);
+    A_matrix,solver_precision,solver_selection,complex_flag);
 
 end
 

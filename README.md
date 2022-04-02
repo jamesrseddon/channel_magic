@@ -1,10 +1,11 @@
 
-# channel_magic v1.0
+# channel_magic v2.0
 
 
-    Channel Magic provides a set of tools for calculating measures of magic for multi-qubit channels, 
-    for use with the CVX convex optimisation package in MATLAB.
-    Copyright (C) 2019  James Seddon 
+    Channel Magic provides a set of tools for calculating measures of magic
+    for multi-qubit channels, for use with the CVX convex optimisation 
+    package in MATLAB.
+    Copyright (C) 2019-2022  James Seddon 
     
     MIT License
 
@@ -29,17 +30,44 @@
     
 
 
-Email: jamesseddon@physics.org
+Email: jseddonquantum@gmail.com
 
 
 
-This code accompanies the article "Quantifying magic for multi-qubit operations", by James R. Seddon and Earl T. Campbell, 2019.
+This code accompanies the article
+"Quantifying magic for multi-qubit operations",
+by James R. Seddon and Earl T. Campbell,
+Proc. R. Soc. A. 475:20190251 (2019)
+https://doi.org/10.1098/rspa.2019.0251
+https://arxiv.org/abs/1901.03322
 
-A pre-print version of the article can be found here: https://arxiv.org/abs/1901.03322
+as well as the thesis
+"Advancing classical simulators by measuring the magic of quantum computation", 
+by James R. Seddon,
+University College London (2021).
+This thesis will shortly be available via UCL Open Access.
 
-These MATLAB tools are primarily aimed at calculating the channel robustness and magic-increasing capacity, as described in the above paper, for two-qubit CPTP maps in the most general case, and for up to five-qubit diagonal channels.
+The code also allows computation of several of the measures of magic defined in
+"Quantify quantum speedups: improved classical simulation from tighter magic monotones",
+by James R. Seddon, Bartosz Regula, Hakop Pashayan, Yingkai Ouyang and Earl T. Campbell,
+PRX Quantum 2, 010345 (2021)
 
+The MATLAB tools released in v1.0 of this repository were primarily aimed
+at calculating the channel robustness and magic-increasing capacity, as 
+described in Seddon and Campbell (2019), for two-qubit CPTP maps in the most 
+general case, and for up to five qubits in the case of diagonal channels.
 The repository also contains several data files Copyright (C) 2017 Mark Howard, see CITATION.md for details.
+
+
+v2.0 includes code to compute or bound further measures of magic for
+channels defined in the thesis, Seddon (2021), allowing 
+
+It also allows computation of several of the measures of magic for states defined in
+"Quantify quantum speedups: improved classical simulation from tighter magic monotones",
+by James R. Seddon, Bartosz Regula, Hakop Pashayan, Yingkai Ouyang and Earl T. Campbell,
+PRX Quantum 2, 010345 (2021)
+https://doi.org/10.1103/PRXQuantum.2.010345
+https://arxiv.org/abs/2002.06181
 
 ------------------------------
 # Prerequisites and Installation
@@ -47,11 +75,24 @@ The repository also contains several data files Copyright (C) 2017 Mark Howard, 
 Code is written in MATLAB, and requires the free convex optimisation package CVX.
 Downloads and documentation for CVX can be found at cvxr.com.
 
+
+To install, simply clone this repository and add to your MATLAB path.
+
 This code has been tested using:
 MATLAB version 9.0 (R2016a) on Windows, with CVX version 2.1, Build 1116.
 MATLAB version 9.5 (R2018b) on Windows, with CVX version 2.1, Build 1127.
 
-To install, simply clone this repository and add to your MATLAB path.
+
+For full functionality the following freely available third-party code must
+be in the user's MATLAB path:
+(1) From Bartosz Regula's code accompanying PRX Quantum 2, 010345 (2021)
+    https://bartoszregula.me/code/magic, the functions:
+    'Lambda' for computing dyadic negativity, and
+    'RobMagG' for computing generalised robustness. 
+(2) The following MATLAB functions by Toby Cubitt, available at
+    https://www.dr-qubit.org/matlab.html
+    'randRho','randU' and 'syspermute'.
+
 
 ------------------------------
 # Working examples

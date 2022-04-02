@@ -20,9 +20,11 @@
 %  Copyright © 2019 James R. Seddon
 %  This file is part of project: Channel Magic
 %
-function [state,stabiliser] = getStabiliserState(pauli_vector)
+function [state,stabiliser] = getStabiliserState(pauli_vector,varargin)
 %%%% Takes vector of Pauli expectation values and calculates the stabiliser
 %%%% state.
+%%%% Optional varargin{1} can be pauli_array, varargin{2} can be
+%%%% pauli_labels, to avoid having to recalculate Paulis each time.
 %tolerance = 1e-5;
 num_paulis = size(pauli_vector,1);
 
@@ -30,7 +32,12 @@ num_qubits = log(num_paulis)/log(4);
 
 dim = 2^num_qubits;
 
-[pauli_array, pauli_labels] = enumeratePaulis(num_qubits);
+if nargin == 3
+    pauli_array = varargin{1};
+    pauli_labels = varargin{2};
+else
+    [pauli_array, pauli_labels] = enumeratePaulis(num_qubits);
+end
 
 stabiliser = {};
 

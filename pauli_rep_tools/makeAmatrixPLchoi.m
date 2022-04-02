@@ -46,7 +46,7 @@ num_maps = length(map_array);
 
 dim_matrix = size(map_array{1});
 
-if ~all(dim_matrix == [4^num_qubits 4^num_qubits])
+if ~all(dim_matrix == [4^(2*num_qubits) 4^(2*num_qubits)])
         errorStruct.message = ['Dimensions of the input Pauli-Liouville'...
                                ' matrices do not match number of qubits.'];
         errorStruct.identifier = ['quasi:makeAmatrixPLchoi:'...
@@ -54,7 +54,7 @@ if ~all(dim_matrix == [4^num_qubits 4^num_qubits])
         error(errorStruct);
 end
 
-Phi_plus_state_PL = round(makeMaxEntangledPL(2));
+Phi_plus_state_PL = round(makeMaxEntangledPL(2*num_qubits));
 
 A_matrix = [];
 

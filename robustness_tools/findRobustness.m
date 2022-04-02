@@ -26,6 +26,9 @@ function [l1norm,status,distribution,dual_var,...
 %%% If an argument 'high' is passed in, CVX will aim for higher precision.
 %%% Second optional argument specifies the solver to be used by CVX. Pass
 %%% in string 'SDPT3' to use that solver, otherwise SeDuMi will be used.
+%%% Third optional argument allows the variable q to be complex.
+%%%  i.e. RHO = \sum_j q_j A_j where q_j can be complex. To enable this
+%%%  option, set third optional argument to 'C' or 'complex'.
 
 dim_input = size(state,1);
 
@@ -48,6 +51,13 @@ SDPT_flag = false;
 if num_flags > 1
     if strcmp(flags{2},'SDPT3')
         SDPT_flag = true;
+    end
+end
+
+complex_flag = false;
+if num_flags > 2
+    if strcmp(flags{3},'C') || strcmp(flags{3},'complex')
+        complex_flag = true;
     end
 end
 
@@ -78,6 +88,10 @@ end
 
 if high_precision && SDPT_flag
     solve_type = 'SDPT_high';
+end
+
+if complex_flag
+    solve_type = [solve_type '_complex'];
 end
 
 display(['Solve type is ' solve_type '.']);
@@ -121,7 +135,46 @@ switch solve_type
             subject to
                 y : A_matrix * q == b_vector
         cvx_end
+    case 'sedumi_low_complex'
+        cvx_begin
+            cvx_solver sedumi
+            variable q(A_columns) complex;
+            dual variable y;
+            minimize( norm(q,1) );
+            subject to
+                y : A_matrix * q == b_vector
+        cvx_end
+        
+    case 'sedumi_high_complex'
+        
+        cvx_begin
+            cvx_solver sedumi
+            cvx_precision high
+            variable q(A_columns) complex;
+            dual variable y;
+            minimize( norm(q,1) );
+            subject to
+                y : A_matrix * q == b_vector
+        cvx_end
+    case 'SDPT_low_complex'
+        cvx_begin
+            variable q(A_columns) complex;
+            dual variable y;
+            minimize( norm(q,1) );
+            subject to
+                y : A_matrix * q == b_vector
+        cvx_end
+    case 'SDPT_high_complex'
+        cvx_begin
+            cvx_precision high
+            variable q(A_columns) complex;
+            dual variable y;
+            minimize( norm(q,1) );
+            subject to
+                y : A_matrix * q == b_vector
+        cvx_end
 end
+
 
 status = cvx_status;
 

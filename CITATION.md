@@ -1,10 +1,22 @@
-Channel Magic v1.0
+Channel Magic v2.0
 ==================
 
-Copyright (c) 2019 James R. Seddon.
+Copyright (c) 2019-2022 James R. Seddon.
 
-To cite this software, please cite the GitHub URL: https://github.com/jamesrseddon/channel_magic,
-and the accompanying journal paper, which can be found at: https://arxiv.org/abs/1901.03322
+To cite this software, please cite the GitHub URL and the accompanying 
+journal paper and thesis:
+(1) https://github.com/jamesrseddon/channel_magic,
+
+(2) "Quantifying magic for multi-qubit operations",
+by James R. Seddon and Earl T. Campbell,
+Proc. R. Soc. A. 475:20190251 (2019)
+https://doi.org/10.1098/rspa.2019.0251
+https://arxiv.org/abs/1901.03322
+
+(3) "Advancing classical simulators by measuring the magic of quantum computation", 
+PhD thesis by James R. Seddon,
+University College London (2021).
+
 
 The software is provided under the MIT license, see LICENSE.md for details.
 

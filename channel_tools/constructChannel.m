@@ -31,9 +31,11 @@ function [ kraus ] = constructChannel(channel_type,params)
 %                   theta
 %   'Z_tensor'      n          n-fold tensor product of single-qubit
 %                   theta       Z-rotations by angle theta.
+%   'Z_DEP'         p          Z-rotation through angle theta followed by 
+%                   theta       depolarising channel of strength p.
 % 
  
-allowed_configs = {'AMP_X','X_AMP','Z_tensor'};
+allowed_configs = {'AMP_X','X_AMP','Z_tensor','Z_DEP'};
 
 if ~any(strcmp(allowed_configs,channel_type))
     errorStruct.message = [channel_type ' is not an allowed channel type.'...
@@ -100,4 +102,21 @@ switch channel_type
             current_Z = kron(current_Z,Z_rotate);
         end
         kraus = current_Z;
+    case 'Z_DEP'
+        if ~(isfield(params,'p') && isfield(params,'theta'))
+            errorStruct.message = ['The channel specified requires '...
+                'parameters to include noise ''p'' and angle ''theta''.'];
+            errorStruct.identifier = ['quasi:constructChannel:'...
+                'missingParameters'];
+            error(errorStruct);
+        end
+        p = params.p;
+        theta = params.theta;
+        display(['Constructing Z-rotation through angle ' num2str(theta)...
+            ', followed by depolarising noise with strength p = '...
+            num2str(p)'.']);
+        
+        depolariser = depolarising(p);
+        Z_rotate = singleQubitPauliRot(theta,'Z');
+        kraus = composeChannels(Z_rotate,depolariser);
 end

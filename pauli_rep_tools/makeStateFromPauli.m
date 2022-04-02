@@ -20,7 +20,7 @@
 %  Copyright © 2019 James R. Seddon
 %  This file is part of project: Channel Magic
 %
-function [state] = makeStateFromPauli(pauli_vector)
+function [rho, ket] = makeStateFromPauli(pauli_vector,varargin)
 %%% Take vector of Pauli expectation values and calculate the matrix
 %%% representation in the computational basis.
 
@@ -32,13 +32,23 @@ dim = 2^num_qubits;
 
 pauli_array = enumeratePaulis(num_qubits);
 
-state = zeros(dim);
+rho = zeros(dim);
 
 for kk = 1:num_paulis
-    state = state + pauli_vector(kk)*pauli_array(:,:,kk);
+    rho = rho + pauli_vector(kk)*pauli_array(:,:,kk);
 end
     
-state = state/dim;
+rho = rho/dim;
+
+if nargout == 2
+    if nargin > 1
+        tolerance = varargin;
+        ket = ketFromDensity(rho,tolerance);
+    else
+        ket = ketFromDensity(rho);
+    end
+end
+
 
 end
 
