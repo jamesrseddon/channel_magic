@@ -1,4 +1,9 @@
 %%%%%%%%%% Upper bound mixed channel extent for noisy-rotations %%%%%%%%%%
+% N.B. Computing the extent for all 10000 randomly generated
+% unitary gates (line 31) can take some time (~2 hours on a standard PC).
+% For faster evaluation, set N to a smaller number.
+
+
 %%%%INPUTS%%%%
 Trotate = [ 1 0;
             0 (1+1i)/sqrt(2)];
