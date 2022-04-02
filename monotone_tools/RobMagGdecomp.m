@@ -5,6 +5,10 @@ function [lambda,x,sigma,omega] = RobMagGdecomp(rho,stabiliser_matrix)
 %   stabilizer states. Computes generalised robustness lambda, then gives
 %   the density matrices making up the associated decomposition:
 %       omega = (lambda*sigma - rho)/(lambda - 1)
+%
+%   Requires function RobMagG rom Bartosz Regula's code accompanying 
+%   PRX Quantum 2, 010345 (2021), available at:
+%   https://bartoszregula.me/code/magic (accessed 2nd April 2022)
 
 [lambda, x] = RobMagG(rho,stabiliser_matrix);
 
